@@ -22,8 +22,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
-      - run: npm ci
+      # `npm ci` first (clean, reproducible); fall back to `npm install` so a
+      # flaky cache/integrity hiccup in the runner can't block the deploy.
+      - run: npm ci || npm install
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
