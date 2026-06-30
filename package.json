@@ -1,0 +1,24 @@
+{
+  "name": "ai-driven-gta7",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "AI-Driven GTA 7 — Liberty Streets. Open-world 3D browser game built with React + react-three-fiber.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "^0.185.0",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.0"
+  }
+}
