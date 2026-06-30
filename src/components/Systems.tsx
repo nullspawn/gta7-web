@@ -1,8 +1,9 @@
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import { game } from '../game/state.js'
-import { stepWorld, nearestCar } from '../game/systems.js'
-import { useGame } from '../store/useGame.js'
+import { game } from '../game/state'
+import { stepWorld, nearestCar } from '../game/systems'
+import { WEAPONS } from '../game/weapons'
+import { useGame } from '../store/useGame'
 
 // The single authoritative game-loop component. Advances the simulation each
 // frame and pushes a THROTTLED snapshot to the reactive store (~12x/sec) so the
@@ -18,6 +19,8 @@ export default function Systems() {
       const p = game.player
       const st = useGame.getState()
       const speed = p.inCar ? Math.abs(p.inCar.speed) / 4.3 : p.speed / 3.0
+      const w = game.weapon
+      const def = WEAPONS[w.current]
       st.setHud({
         money: p.money,
         wanted: Math.round(game.wanted),
@@ -27,10 +30,17 @@ export default function Systems() {
         deliveries: game.deliveries,
         kills: game.kills,
         inCar: !!p.inCar,
+        weaponName: def.name,
+        ammo: w.ammo[w.current],
+        mag: def.mag,
+        reloading: w.reloadT > 0,
+        missionTimer: game.mission?.timeLeft ? Math.ceil(game.mission.timeLeft) : 0,
       })
       st.setFocusActive(game.focusActive)
-      if (!p.inCar) { const c = nearestCar(60); st.setPrompt(c ? `Press [E] to take the ${c.kind === 'bike' ? 'motorcycle' : 'car'}` : '') }
-      else st.setPrompt('')
+      if (!p.inCar) {
+        const c = nearestCar(60)
+        st.setPrompt(c ? `Press [E] to take the ${c.kind === 'bike' ? 'motorcycle' : 'car'}` : '')
+      } else st.setPrompt('')
     }
   })
   return null

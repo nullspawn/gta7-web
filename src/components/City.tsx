@@ -1,31 +1,46 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
-import { WORLD, BLOCK, ROAD } from '../game/constants.js'
-import { game } from '../game/state.js'
-import Trees from './Trees.jsx'
+import { WORLD, BLOCK, ROAD } from '../game/constants'
+import { game } from '../game/state'
+import Trees from './Trees'
 
 const FACADE_BASE = ['#3a4256', '#454d66', '#4a3b50', '#3b4f4c', '#524d3a', '#413a52']
 
 function makeFacade(base) {
-  const c = document.createElement('canvas'); c.width = c.height = 128
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
   const g = c.getContext('2d')
-  g.fillStyle = base; g.fillRect(0, 0, 128, 128)
+  g.fillStyle = base
+  g.fillRect(0, 0, 128, 128)
   const grd = g.createLinearGradient(0, 0, 0, 128)
-  grd.addColorStop(0, 'rgba(255,255,255,0.06)'); grd.addColorStop(1, 'rgba(0,0,0,0.18)')
-  g.fillStyle = grd; g.fillRect(0, 0, 128, 128)
-  const cols = 4, rows = 4, mar = 10, gap = 6
+  grd.addColorStop(0, 'rgba(255,255,255,0.06)')
+  grd.addColorStop(1, 'rgba(0,0,0,0.18)')
+  g.fillStyle = grd
+  g.fillRect(0, 0, 128, 128)
+  const cols = 4,
+    rows = 4,
+    mar = 10,
+    gap = 6
   const cw = (128 - mar * 2 - gap * (cols - 1)) / cols
   const ch = (128 - mar * 2 - gap * (rows - 1)) / rows
-  for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
-    const x = mar + i * (cw + gap), y = mar + j * (ch + gap)
-    const lit = Math.random() < 0.32
-    g.fillStyle = lit
-      ? `rgba(255,221,150,${0.55 + Math.random() * 0.4})`
-      : `rgba(${20 + (Math.random() * 40) | 0},${30 + (Math.random() * 40) | 0},${45 + (Math.random() * 50) | 0},0.9)`
-    g.fillRect(x, y, cw, ch)
-    g.strokeStyle = 'rgba(0,0,0,0.35)'; g.lineWidth = 1.5; g.strokeRect(x, y, cw, ch)
-    g.strokeStyle = 'rgba(0,0,0,0.25)'; g.beginPath(); g.moveTo(x + cw / 2, y); g.lineTo(x + cw / 2, y + ch); g.stroke()
-  }
+  for (let i = 0; i < cols; i++)
+    for (let j = 0; j < rows; j++) {
+      const x = mar + i * (cw + gap),
+        y = mar + j * (ch + gap)
+      const lit = Math.random() < 0.32
+      g.fillStyle = lit
+        ? `rgba(255,221,150,${0.55 + Math.random() * 0.4})`
+        : `rgba(${(20 + Math.random() * 40) | 0},${(30 + Math.random() * 40) | 0},${(45 + Math.random() * 50) | 0},0.9)`
+      g.fillRect(x, y, cw, ch)
+      g.strokeStyle = 'rgba(0,0,0,0.35)'
+      g.lineWidth = 1.5
+      g.strokeRect(x, y, cw, ch)
+      g.strokeStyle = 'rgba(0,0,0,0.25)'
+      g.beginPath()
+      g.moveTo(x + cw / 2, y)
+      g.lineTo(x + cw / 2, y + ch)
+      g.stroke()
+    }
   const t = new THREE.CanvasTexture(c)
   t.wrapS = t.wrapT = THREE.RepeatWrapping
   t.colorSpace = THREE.SRGBColorSpace
@@ -42,12 +57,13 @@ export default function City() {
 
   const facades = useMemo(() => FACADE_BASE.map(makeFacade), [])
   const materials = useMemo(
-    () => data.buildings.map((b) => {
-      const tex = facades[b.facade].clone()
-      tex.needsUpdate = true
-      tex.repeat.set(b.repeatX, b.repeatY)
-      return new THREE.MeshLambertMaterial({ map: tex })
-    }),
+    () =>
+      data.buildings.map((b) => {
+        const tex = facades[b.facade].clone()
+        tex.needsUpdate = true
+        tex.repeat.set(b.repeatX, b.repeatY)
+        return new THREE.MeshLambertMaterial({ map: tex })
+      }),
     [data, facades],
   )
 

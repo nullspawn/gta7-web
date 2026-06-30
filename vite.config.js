@@ -19,7 +19,8 @@ export default defineConfig({
           if (!id.includes('node_modules')) return
           if (id.includes('/three/') || id.includes('/three-stdlib/')) return 'three'
           if (id.includes('@react-three')) return 'r3f'
-          if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) return 'react'
+          if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/'))
+            return 'react'
           return 'vendor'
         },
       },

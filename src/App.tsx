@@ -1,13 +1,13 @@
 import { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Color, Fog } from 'three'
-import { useGame } from './store/useGame.js'
-import { startRun } from './game/systems.js'
-import Controls from './components/Controls.jsx'
-import Preloader from './components/Preloader.jsx'
-import World from './components/World.jsx'
-import HUD from './ui/HUD.jsx'
-import Overlay from './ui/Overlay.jsx'
+import { useGame } from './store/useGame'
+import { startRun } from './game/systems'
+import Controls from './components/Controls'
+import Preloader from './components/Preloader'
+import World from './components/World'
+import HUD from './ui/HUD'
+import Overlay from './ui/Overlay'
 
 const SKY = 0xaecae8
 
@@ -17,7 +17,8 @@ export default function App() {
 
   // Optional ?autostart=1 — jump straight into a run once models are ready.
   useEffect(() => {
-    if (modelsReady && phase === 'menu' && new URLSearchParams(location.search).has('autostart')) startRun()
+    if (modelsReady && phase === 'menu' && new URLSearchParams(location.search).has('autostart'))
+      startRun()
   }, [modelsReady, phase])
 
   return (

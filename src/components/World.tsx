@@ -1,13 +1,13 @@
-import City from './City.jsx'
-import Lights from './Lights.jsx'
-import { Cars, Police } from './Vehicles.jsx'
-import Pedestrians from './Pedestrians.jsx'
-import Pickups from './Pickups.jsx'
-import Player from './Player.jsx'
-import MissionMarker from './MissionMarker.jsx'
-import Effects from './Effects.jsx'
-import CameraRig from './CameraRig.jsx'
-import Systems from './Systems.jsx'
+import City from './City'
+import Lights from './Lights'
+import { Cars, Police } from './Vehicles'
+import Pedestrians from './Pedestrians'
+import Pickups from './Pickups'
+import Player from './Player'
+import MissionMarker from './MissionMarker'
+import Effects from './Effects'
+import CameraRig from './CameraRig'
+import Systems from './Systems'
 
 // Everything that exists only while a run is active. Mounted when phase ===
 // 'playing' and unmounted otherwise, so each run starts from a fresh city.

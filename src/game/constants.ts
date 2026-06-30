@@ -5,13 +5,23 @@ export const BLOCK = 500
 export const ROAD = 120
 
 export const CAR_COLORS = [
-  '#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22',
-  '#ecf0f1', '#1abc9c', '#ff6b9d', '#566270', '#2c3e50', '#d35400',
+  '#e74c3c',
+  '#3498db',
+  '#f1c40f',
+  '#2ecc71',
+  '#9b59b6',
+  '#e67e22',
+  '#ecf0f1',
+  '#1abc9c',
+  '#ff6b9d',
+  '#566270',
+  '#2c3e50',
+  '#d35400',
 ]
 
 // vehicle handling
 export const VEHICLE = {
-  car:  { base: 2.6, boost: 3.9, accel: 0.065, turn: 0.03 },
+  car: { base: 2.6, boost: 3.9, accel: 0.065, turn: 0.03 },
   bike: { base: 2.9, boost: 4.3, accel: 0.075, turn: 0.036 },
 }
 

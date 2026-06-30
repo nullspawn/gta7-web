@@ -6,3 +6,6 @@ dist/
 # kitten-bot drafts & skill (keep private)
 _kitten-bot/
 .claude/
+
+# macOS
+.DS_Store

@@ -1,10 +1,10 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { game } from '../game/state.js'
-import { useGame } from '../store/useGame.js'
+import { game } from '../game/state'
+import { useGame } from '../store/useGame'
 
 function PedView({ ped }) {
-  const ref = useRef()
+  const ref = useRef<any>(null)
   useFrame(() => {
     if (!ref.current) return
     ref.current.visible = !ped.dead
@@ -13,9 +13,18 @@ function PedView({ ped }) {
   })
   return (
     <group ref={ref}>
-      <mesh position={[0, 7, 0]} castShadow><boxGeometry args={[10, 14, 8]} /><meshLambertMaterial color={0x2b2f3a} /></mesh>
-      <mesh position={[0, 20, 0]} castShadow><boxGeometry args={[11, 14, 9]} /><meshLambertMaterial color={ped.color} /></mesh>
-      <mesh position={[0, 31, 0]}><boxGeometry args={[8, 8, 8]} /><meshLambertMaterial color={0xf1c27d} /></mesh>
+      <mesh position={[0, 7, 0]} castShadow>
+        <boxGeometry args={[10, 14, 8]} />
+        <meshLambertMaterial color={0x2b2f3a} />
+      </mesh>
+      <mesh position={[0, 20, 0]} castShadow>
+        <boxGeometry args={[11, 14, 9]} />
+        <meshLambertMaterial color={ped.color} />
+      </mesh>
+      <mesh position={[0, 31, 0]}>
+        <boxGeometry args={[8, 8, 8]} />
+        <meshLambertMaterial color={0xf1c27d} />
+      </mesh>
     </group>
   )
 }

@@ -5,17 +5,18 @@ const GREENS = [0x2e7d4f, 0x35935b, 0x287045]
 // Low-poly trees: a tapered trunk + a few icosahedron foliage blobs.
 export default function Trees({ trees }) {
   const built = useMemo(
-    () => trees.map((t) => {
-      const th = (55 + Math.random() * 40) * t.scale
-      const blobs = Array.from({ length: 3 }, (_, i) => ({
-        r: (26 + Math.random() * 14) * t.scale,
-        x: -10 + Math.random() * 20,
-        y: th + (-6 + Math.random() * 20),
-        z: -10 + Math.random() * 20,
-        c: GREENS[i % 3],
-      }))
-      return { ...t, th, blobs }
-    }),
+    () =>
+      trees.map((t) => {
+        const th = (55 + Math.random() * 40) * t.scale
+        const blobs = Array.from({ length: 3 }, (_, i) => ({
+          r: (26 + Math.random() * 14) * t.scale,
+          x: -10 + Math.random() * 20,
+          y: th + (-6 + Math.random() * 20),
+          z: -10 + Math.random() * 20,
+          c: GREENS[i % 3],
+        }))
+        return { ...t, th, blobs }
+      }),
     [trees],
   )
   return (

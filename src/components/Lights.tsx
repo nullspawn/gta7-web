@@ -1,16 +1,23 @@
-import { useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { game } from '../game/state.js'
+import { Object3D } from 'three'
+import { game } from '../game/state'
 
 // Hemisphere fill + a directional sun whose shadow frustum follows the player,
 // so only nearby objects are shadow-mapped (keeps the cost bounded).
 export default function Lights() {
-  const sun = useRef()
-  const target = useRef()
+  const sun = useRef<any>(null)
+  // A stable, real target object (never null) — passing a null target prop
+  // crashes Three's shadow-matrix update on the first frame.
+  const target = useMemo(() => new Object3D(), [])
+  useEffect(() => {
+    if (sun.current) sun.current.target = target
+  }, [target])
   useFrame(() => {
     const p = game.player
     if (sun.current) sun.current.position.set(p.x + 500, 1000, p.z + 350)
-    if (target.current) { target.current.position.set(p.x, 0, p.z); target.current.updateMatrixWorld() }
+    target.position.set(p.x, 0, p.z)
+    target.updateMatrixWorld()
   })
   return (
     <>
@@ -30,9 +37,8 @@ export default function Lights() {
         shadow-camera-right={650}
         shadow-camera-top={650}
         shadow-camera-bottom={-650}
-        target={target.current}
       />
-      <object3D ref={target} />
+      <primitive object={target} />
     </>
   )
 }
