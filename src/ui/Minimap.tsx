@@ -4,13 +4,13 @@ import { BLOCK, ROAD, TWO_PI } from '../game/constants'
 
 // Top-down minimap drawn on its own rAF loop straight from the world singleton.
 export default function Minimap() {
-  const ref = useRef<any>(null)
+  const ref = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
-    const cv = ref.current
-    const ctx = cv.getContext('2d')
+    const cv = ref.current!
+    const ctx = cv.getContext('2d')!
     const W = cv.width,
       H = cv.height
-    let raf
+    let raf = 0
     const draw = () => {
       const p = game.player
       ctx.clearRect(0, 0, W, H)

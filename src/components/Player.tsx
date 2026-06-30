@@ -1,12 +1,13 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Group, Mesh } from 'three'
 import { game } from '../game/state'
 
 // On-foot player avatar (hidden while driving). Gun points forward; a punch
 // arm pops out briefly when meleeing.
 export default function Player() {
-  const ref = useRef<any>(null)
-  const arm = useRef<any>(null)
+  const ref = useRef<Group>(null)
+  const arm = useRef<Mesh>(null)
   useFrame(() => {
     const p = game.player
     if (!ref.current) return

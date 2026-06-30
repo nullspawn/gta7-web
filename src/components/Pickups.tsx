@@ -1,10 +1,12 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Mesh } from 'three'
 import { game } from '../game/state'
 import { useGame } from '../store/useGame'
+import type { Pickup } from '../game/types'
 
-function PickupView({ k }) {
-  const ref = useRef<any>(null)
+function PickupView({ k }: { k: Pickup }) {
+  const ref = useRef<Mesh>(null)
   useFrame(() => {
     if (!ref.current) return
     ref.current.visible = !k.taken

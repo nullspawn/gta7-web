@@ -1,10 +1,12 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Group } from 'three'
 import { game } from '../game/state'
 import { useGame } from '../store/useGame'
+import type { Ped } from '../game/types'
 
-function PedView({ ped }) {
-  const ref = useRef<any>(null)
+function PedView({ ped }: { ped: Ped }) {
+  const ref = useRef<Group>(null)
   useFrame(() => {
     if (!ref.current) return
     ref.current.visible = !ped.dead

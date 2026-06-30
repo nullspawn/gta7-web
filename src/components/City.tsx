@@ -6,10 +6,10 @@ import Trees from './Trees'
 
 const FACADE_BASE = ['#3a4256', '#454d66', '#4a3b50', '#3b4f4c', '#524d3a', '#413a52']
 
-function makeFacade(base) {
+function makeFacade(base: string) {
   const c = document.createElement('canvas')
   c.width = c.height = 128
-  const g = c.getContext('2d')
+  const g = c.getContext('2d')!
   g.fillStyle = base
   g.fillRect(0, 0, 128, 128)
   const grd = g.createLinearGradient(0, 0, 0, 128)
@@ -51,7 +51,8 @@ function makeFacade(base) {
 // with per-building window-facade textures. Generated once per run from
 // game.cityData (built in startRun()).
 export default function City() {
-  const data = game.cityData
+  // City only mounts while a run is active, so cityData is always populated.
+  const data = game.cityData!
   const cols = Math.floor(WORLD.w / BLOCK)
   const rows = Math.floor(WORLD.h / BLOCK)
 

@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Object3D, Color } from 'three'
+import { Object3D, Color, InstancedMesh } from 'three'
 import { game } from '../game/state'
 
 const MAX = 500
@@ -10,7 +10,7 @@ const col = new Color()
 // All particle FX (blood, sparks, muzzle flash, debris) drawn from one
 // InstancedMesh, synced imperatively from game.fx — no React churn per particle.
 export default function Effects() {
-  const mesh = useRef<any>(null)
+  const mesh = useRef<InstancedMesh>(null)
   useLayoutEffect(() => {
     if (mesh.current) mesh.current.frustumCulled = false
   }, [])

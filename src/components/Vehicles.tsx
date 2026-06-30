@@ -1,13 +1,15 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Group, Mesh, MeshBasicMaterial } from 'three'
 import { game } from '../game/state'
 import { useGame } from '../store/useGame'
-import { useVehicleTemplates } from './useVehicleTemplates'
+import { useVehicleTemplates, type VehicleTemplates } from './useVehicleTemplates'
+import type { Car } from '../game/types'
 
 // One civilian vehicle: clones the right GLB template and syncs its transform
 // from the sim entity every frame (no React state on the hot path).
-function CarView({ car, templates }) {
-  const ref = useRef<any>(null)
+function CarView({ car, templates }: { car: Car; templates: VehicleTemplates }) {
+  const ref = useRef<Group>(null)
   const obj = useMemo(() => {
     const tpl =
       car.kind === 'bike'
@@ -36,16 +38,18 @@ export function Cars() {
 }
 
 // Police keep a procedural, instantly recognisable model with a flashing bar.
-function PoliceView({ car }) {
-  const ref = useRef<any>(null)
-  const bar = useRef<any>(null)
+function PoliceView({ car }: { car: Car }) {
+  const ref = useRef<Group>(null)
+  const bar = useRef<Mesh>(null)
   useFrame(() => {
     if (ref.current) {
       ref.current.position.set(car.x, 0, car.z)
       ref.current.rotation.y = car.a
     }
-    if (bar.current)
-      bar.current.material.color.setHex(Math.sin(car.siren * 4) > 0 ? 0xff1133 : 0x1133ff)
+    if (bar.current) {
+      const mat = bar.current.material as MeshBasicMaterial
+      mat.color.setHex(Math.sin(car.siren * 4) > 0 ? 0xff1133 : 0x1133ff)
+    }
   })
   return (
     <group ref={ref}>

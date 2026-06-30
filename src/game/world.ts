@@ -1,20 +1,21 @@
 import { WORLD, BLOCK, ROAD, rand, randi } from './constants'
 import { game } from './state'
+import type { BuildingMesh, TreeData, ParkData, CityData } from './types'
 
 const FACADES = 6
 
 // Procedurally lay out the city once. Returns render data; also fills
 // game.buildings with AABB collision boxes (trees are non-colliding).
-export function generateCity() {
-  const buildings = [] // { x, z, w, d, h, facade, repeatX, repeatY }
-  const trees = [] // { x, z, scale }
-  const parks = [] // { x, z, w, d }
+export function generateCity(): CityData {
+  const buildings: BuildingMesh[] = []
+  const trees: TreeData[] = []
+  const parks: ParkData[] = []
   game.buildings.length = 0
 
   const cols = Math.floor(WORLD.w / BLOCK)
   const rows = Math.floor(WORLD.h / BLOCK)
 
-  const place = (x, z, w, d) => {
+  const place = (x: number, z: number, w: number, d: number) => {
     const h = rand(70, 300)
     buildings.push({
       x: x + w / 2,
@@ -81,4 +82,4 @@ export function findRoadPoint() {
   }
   return { x: BLOCK * 4, z: BLOCK * 4, horiz: true }
 }
-const clampW = (v) => Math.max(60, Math.min(WORLD.w - 60, v))
+const clampW = (v: number) => Math.max(60, Math.min(WORLD.w - 60, v))

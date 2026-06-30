@@ -364,7 +364,7 @@ export function shoot() {
       ez = oz + dz * hitT
     for (let i = 1; i <= 3; i++)
       spawnFX(ox + dx * ((hitT * i) / 4), 22, oz + dz * ((hitT * i) / 4), 0xfff2a0, 1, true)
-    if (hitKind === 'ped') {
+    if (hitKind === 'ped' && hitObj) {
       const t = hitObj as Ped
       t.hp -= def.damagePed
       t.panic = 200
@@ -373,7 +373,7 @@ export function shoot() {
         bumpWanted(def.wanted)
         game.kills++
       }
-    } else if (hitKind === 'car') {
+    } else if (hitKind === 'car' && hitObj) {
       const c = hitObj as Car
       c.hp -= def.damageCar
       spawnFX(ex, 16, ez, 0xffd33d, 5)

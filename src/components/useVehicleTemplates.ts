@@ -1,8 +1,13 @@
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { Box3, Vector3, Group } from 'three'
+import { Box3, Vector3, Group, Mesh, type Object3D, MeshStandardMaterial } from 'three'
 
-const url = (f) => `${import.meta.env.BASE_URL}models/${f}`
+export interface VehicleTemplates {
+  carTpls: Group[]
+  motoTpl: Group
+}
+
+const url = (f: string) => `${import.meta.env.BASE_URL}models/${f}`
 const CAR_URLS = [url('car_minivan.glb'), url('car_truck.glb')]
 const MOTO_URL = url('motorcycle.glb')
 
@@ -13,7 +18,7 @@ useGLTF.preload(MOTO_URL)
 
 // Scale/orient a loaded scene to a target length, centre it, and drop it so the
 // wheels rest on y=0. Returns a reusable template group (cloned per vehicle).
-function normalize(scene, targetLen) {
+function normalize(scene: Object3D, targetLen: number): Group {
   const root = scene.clone(true)
   const size = new Vector3()
   new Box3().setFromObject(root).getSize(size)
@@ -29,17 +34,17 @@ function normalize(scene, targetLen) {
   root.position.x -= c.x
   root.position.z -= c.z
   root.position.y -= bb.min.y
-  wrap.traverse((o: any) => {
-    if (o.isMesh) {
+  wrap.traverse((o: Object3D) => {
+    if (o instanceof Mesh) {
       o.castShadow = true
-      if (o.material && 'metalness' in o.material)
-        o.material.metalness = Math.min(o.material.metalness, 0.35)
+      const mat = o.material
+      if (mat instanceof MeshStandardMaterial) mat.metalness = Math.min(mat.metalness, 0.35)
     }
   })
   return wrap
 }
 
-export function useVehicleTemplates() {
+export function useVehicleTemplates(): VehicleTemplates {
   const minivan = useGLTF(CAR_URLS[0])
   const truck = useGLTF(CAR_URLS[1])
   const moto = useGLTF(MOTO_URL)

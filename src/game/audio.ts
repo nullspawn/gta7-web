@@ -3,8 +3,9 @@ let actx: AudioContext | null = null
 export function initAudio() {
   if (!actx) {
     try {
-      const Ctx = window.AudioContext || (window as any).webkitAudioContext
-      actx = new Ctx()
+      const w = window as typeof window & { webkitAudioContext?: typeof AudioContext }
+      const Ctx = w.AudioContext || w.webkitAudioContext
+      if (Ctx) actx = new Ctx()
     } catch {
       /* no audio */
     }

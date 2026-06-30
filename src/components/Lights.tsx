@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Object3D } from 'three'
+import { Object3D, DirectionalLight } from 'three'
 import { game } from '../game/state'
 
 // Hemisphere fill + a directional sun whose shadow frustum follows the player,
 // so only nearby objects are shadow-mapped (keeps the cost bounded).
 export default function Lights() {
-  const sun = useRef<any>(null)
+  const sun = useRef<DirectionalLight>(null)
   // A stable, real target object (never null) — passing a null target prop
   // crashes Three's shadow-matrix update on the first frame.
   const target = useMemo(() => new Object3D(), [])

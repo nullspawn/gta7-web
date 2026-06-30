@@ -1,10 +1,11 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Mesh } from 'three'
 import { game } from '../game/state'
 
 // Pulsing translucent beacon over the current delivery drop-off.
 export default function MissionMarker() {
-  const ref = useRef<any>(null)
+  const ref = useRef<Mesh>(null)
   useFrame(() => {
     const m = game.mission
     if (!ref.current) return
