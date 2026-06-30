@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 // base everywhere so `dev`, `preview`, and the deployed build all agree on
 // asset paths (a conditional base broke `vite preview` locally).
 export default defineConfig({
-  base: '/ai-driven-gta7/',
+  base: '/gta7-web/',
   plugins: [react()],
   build: {
     outDir: 'dist',
